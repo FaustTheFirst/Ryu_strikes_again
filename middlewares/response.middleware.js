@@ -1,15 +1,25 @@
 const responseMiddleware = (req, res, next) => {
    // TODO: Implement middleware that returns result of the query
-   
+
+   let temp;
+
    if(Array.isArray(req.body)) {
+       temp = [];
        req.body.forEach(elem => {
-           delete elem.id;
-           delete elem.password;
+           temp.push({ ...elem });
+        });
+
+        temp.forEach(elem => {
+            delete elem.id;
+            delete elem.password;
         });
     } else {
-        delete req.body.id;
-        delete req.body.password;
+        temp = { ...req.body };
+        delete temp.id;
+        delete temp.password;
     }
+
+    req.body = temp;
 
     next();
 }

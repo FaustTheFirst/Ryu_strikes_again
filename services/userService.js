@@ -23,7 +23,10 @@ class UserService {
 
     updateUser(id, changes) {
         const updation = UserRepository.update(id, changes);
-        console.log(chan, 'updated');
+        if(!updation) {
+            return null;
+        }
+        
         return updation;
     }
 
